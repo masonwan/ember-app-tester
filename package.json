@@ -4,7 +4,8 @@
   "description": "Provide various of classes to test Ember app",
   "main": "dist/index.js",
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "prepublish": "gulp release"
   },
   "keywords": [
     "ember",
@@ -20,7 +21,8 @@
     "gulp-mocha": "^3.0.1",
     "mocha": "^3.1.2",
     "request": "^2.78.0",
-    "request-promise": "^4.1.1"
+    "request-promise": "^4.1.1",
+    "run-sequence": "^1.2.2"
   },
   "dependencies": {
     "debug": "^2.3.2",

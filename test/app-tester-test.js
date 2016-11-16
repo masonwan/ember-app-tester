@@ -6,7 +6,7 @@ const fs = require('fs-promise')
 const AppTester = require('../index').AppTester
 
 describe('AppTester', function () {
-  this.timeout(30000) // It may encounter the worst case that nothing in the Bower and yarn cache.
+  this.timeout(60000) // It may encounter the worst case that nothing in the Bower and yarn cache.
 
   const defaultTempDir = AppTester.getDefaultTempDir()
 

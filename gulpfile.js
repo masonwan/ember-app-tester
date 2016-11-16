@@ -2,11 +2,13 @@ const gulp = require('gulp')
 const babel = require('gulp-babel')
 const del = require('del')
 const mocha = require('gulp-mocha')
+const runSequence = require('run-sequence')
 
 gulp
-  .task('default', [
-    'test',
-  ], () => {})
+  .task('default', ['release'])
+  .task('release', () => {
+    return runSequence('clean', 'test', 'build')
+  })
   .task('clean', () => {
     return del([
       'dist',

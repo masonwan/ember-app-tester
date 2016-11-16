@@ -19,21 +19,38 @@ AppTester will copy all the apps to the cache path (system temp directory by def
 
 ## Usage
 
-In your build script, you may have...
+In the build script, load the apps directory.
 
 ```
-const AppTester = require('ember-app-tester')
+const {
+  AppTester,
+  EmberServer,
+} = require('../index')
 
 new AppTester({
   appsPath: '/path/to/apps',
   cachePath: '/path/to/build/dir',
 }).loadApps()
 	.then((appNameList) => {
-		// Apps are ready.
+		// Apps are copied to the temp directory and ready to be served.
 	})
 	.catch((err) => {
 		// One or more apps failed to load.
 	})
 ```
 
-And in your tests, you could
+In the test, start the Ember server.
+
+```
+const emberServer = new EmberServer({
+  appName: 'non-existing-app',
+})
+
+emberServer.start()
+  .then(() => {
+    // Ember server is ready.
+  })
+  .catch((err) => {
+    // Something bad happened.
+  })
+```
