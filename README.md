@@ -15,17 +15,14 @@ AppTester will copy all the apps to the cache path (system temp directory by def
 
 ## Installation
 
-`npm install --save-dev ember-app-testers`
+`npm install --save-dev ember-app-tester`
 
 ## Usage
 
 In the build script, load the apps directory.
 
 ```
-const {
-  AppTester,
-  EmberServer,
-} = require('../index')
+const AppTester = require('ember-app-tester').AppTester
 
 new AppTester({
   appsPath: '/path/to/apps',
@@ -42,6 +39,8 @@ new AppTester({
 In the test, start the Ember server.
 
 ```
+const EmberServer = require('ember-app-tester').EmberServer
+
 const emberServer = new EmberServer({
   appName: 'non-existing-app',
 })
