@@ -1,0 +1,16 @@
+{
+  "name": "fastboot-app",
+  "description": "Minimized Ember app used for test case",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "ember-cli": "2.9.1",
+    "ember-cli-babel": "^5.1.10",
+    "ember-cli-htmlbars": "^1.1.0",
+    "ember-resolver": "^2.0.3",
+    "loader.js": "^4.0.1"
+  },
+  "dependencies": {
+    "ember-cli-fastboot": "^1.0.0-beta.13"
+  }
+}

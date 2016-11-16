@@ -56,4 +56,21 @@ describe('EmberServer', function () {
         expect(html).to.contains(`<title>SimpleEmberApp</title>`)
       })
   })
+
+  // Skip due to `ember fastboot` command is not reliable. Sometimes it runs and sometimes it does not. https://github.com/ember-fastboot/ember-cli-fastboot/issues/246
+  it.skip('should run fastboot command', () => {
+    emberServer = new EmberServer({
+      appName: 'fastboot',
+      args: ['fastboot'],
+      serverStartedMessagePattern: /Ember FastBoot running at http/,
+    })
+
+    return emberServer.start()
+      .then(() => {
+        return request('http://localhost:3000')
+      })
+      .then((html) => {
+        expect(html).to.contains(`<title>SimpleEmberApp</title>`)
+      })
+  })
 })

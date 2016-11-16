@@ -112,28 +112,29 @@ module.exports = class AppsLoader {
         let appNames = appDirs.map((appDir) => path.basename(appDir))
         debug.enabled && debug(`List of apps: ${appNames}`)
 
-        let promises = appDirs
-          .map((appDir) => {
-            let appName = path.basename(appDir)
-            let destinationDir = path.join(this.cachePath, appName)
+        let promise = Promise.resolve()
 
-            return Promise.resolve()
-              .then(() => {
-                debug(`Copy '${appDir}' to '${destinationDir}'`)
-                return fs.copy(appDir, destinationDir)
-              })
-              .then(() => {
-                return AppsLoader.runYarn(destinationDir)
-                  .then(() => {
-                    return AppsLoader.runBowerInstall(destinationDir)
-                  })
-              })
-              .catch((err) => {
-                throw new Error(`Failed to load app '${appName}'.\n${err.stack}`)
-              })
-          })
+        appDirs.forEach((appDir) => {
+          let appName = path.basename(appDir)
+          let destinationDir = path.join(this.cachePath, appName)
 
-        return Promise.all(promises)
+          promise = promise
+            .then(() => {
+              debug(`Copy '${appDir}' to '${destinationDir}'`)
+              return fs.copy(appDir, destinationDir)
+            })
+            .then(() => {
+              return AppsLoader.runYarn(destinationDir)
+                .then(() => {
+                  return AppsLoader.runBowerInstall(destinationDir)
+                })
+            })
+            .catch((err) => {
+              throw new Error(`Failed to load app '${appName}'.\n${err.stack}`)
+            })
+        })
+
+        return promise
           .then(() => {
             return appNames
           })

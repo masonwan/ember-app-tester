@@ -9,6 +9,11 @@ module.exports = class EmberServer {
     this.appName = options.appName
     this.appPath = path.join(EmberServer.getDefaultTempDir(), this.appName)
     this.args = options.args || ['serve']
+    /**
+     * The regular expression to match the stdout for detecting if the server is up.
+     * @type {RegExp}
+     */
+    this.serverStartedMessagePattern = options.serverStartedMessagePattern || /Serving on http/
     this.process = null
   }
 
@@ -20,9 +25,9 @@ module.exports = class EmberServer {
         }
       })
       .then(() => {
-        debug(`Serving Ember app at '${this.appPath} with port '${this.port}'`)
-
         return new Promise((resolve, reject) => {
+          debug.enabled && debug(`Run Ember command 'ember ${this.args.join(' ')}' at '${this.appPath}`)
+
           const process = childProcess.spawn('ember', this.args, { cwd: this.appPath })
           this.process = process
 
@@ -30,7 +35,7 @@ module.exports = class EmberServer {
           let outputMessage = ''
           const onData = (buffer) => {
             outputMessage += buffer.toString()
-            if (outputMessage.includes('Build successful')) {
+            if (outputMessage.match(this.serverStartedMessagePattern)) {
               process.stdout.removeListener('data', onData)
               resolve()
             }
