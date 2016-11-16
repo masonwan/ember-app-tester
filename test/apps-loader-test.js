@@ -3,12 +3,12 @@ const request = require('request-promise')
 const expect = require('chai').expect
 const fs = require('fs-promise')
 
-const AppTester = require('../index').AppTester
+const AppsLoader = require('../index').AppsLoader
 
-describe('AppTester', function () {
+describe('AppsLoader', function () {
   this.timeout(60000) // It may encounter the worst case that nothing in the Bower and yarn cache.
 
-  const defaultTempDir = AppTester.getDefaultTempDir()
+  const defaultTempDir = AppsLoader.getDefaultTempDir()
 
   describe('wrong fixture apps', () => {
 
@@ -17,20 +17,20 @@ describe('AppTester', function () {
     })
 
     it('should throw if package.json does not exist', () => {
-      let appTester = new AppTester({
+      let appsLoader = new AppsLoader({
         appsPath: path.join(__dirname, 'no-package-json-apps'),
       })
-      return appTester.loadApps()
+      return appsLoader.loadApps()
         .catch((err) => {
           expect(err.message).to.contains(`Could not read 'package.json'`)
         })
     })
 
     it('should throw if bower.json does not exist', () => {
-      let appTester = new AppTester({
+      let appsLoader = new AppsLoader({
         appsPath: path.join(__dirname, 'no-bower-json-apps'),
       })
-      return appTester.loadApps()
+      return appsLoader.loadApps()
         .catch((err) => {
           expect(err.message).to.contains(`'bower install' returns exit code 1`)
         })
@@ -39,13 +39,13 @@ describe('AppTester', function () {
 
   describe('correct fixture app', () => {
 
-    let appTester
+    let appsLoader
 
     before(() => {
-      appTester = new AppTester({
+      appsLoader = new AppsLoader({
         appsPath: path.join(__dirname, 'apps'),
       })
-      return appTester.loadApps()
+      return appsLoader.loadApps()
     })
 
     it('should be in the cache directory', () => {
@@ -63,7 +63,7 @@ describe('AppTester', function () {
     })
 
     it('should clear cache', () => {
-      return appTester.clearCache()
+      return appsLoader.clearCache()
         .then(() => {
           return fs.access(defaultTempDir, fs.R_OK)
             .then(() => {

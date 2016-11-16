@@ -4,10 +4,10 @@ const os = require('os')
 const fs = require('fs-promise')
 const path = require('path')
 
-module.exports = class AppTester {
+module.exports = class AppsLoader {
 
   static runBowerInstall(destinationDir) {
-    return AppTester.runCommand({
+    return AppsLoader.runCommand({
       file: 'bower',
       args: ['install'],
       cwd: destinationDir,
@@ -15,7 +15,7 @@ module.exports = class AppTester {
   }
 
   static runNpmInstall(destinationDir) {
-    return AppTester.runCommand({
+    return AppsLoader.runCommand({
       file: 'npm',
       args: ['install'],
       cwd: destinationDir,
@@ -29,7 +29,7 @@ module.exports = class AppTester {
           throw new Error(`Could not read 'package.json'.`)
         }
 
-        return AppTester.runCommand({
+        return AppsLoader.runCommand({
           file: 'yarn',
           cwd: destinationDir,
         })
@@ -78,7 +78,7 @@ module.exports = class AppTester {
 
   constructor(options = {}) {
     this.appsPath = options.appsPath
-    this.cachePath = options.cachePath || AppTester.getDefaultTempDir()
+    this.cachePath = options.cachePath || AppsLoader.getDefaultTempDir()
     this.port = options.port || 4200
     this.process = null
   }
@@ -123,9 +123,9 @@ module.exports = class AppTester {
                 return fs.copy(appDir, destinationDir)
               })
               .then(() => {
-                return AppTester.runYarn(destinationDir)
+                return AppsLoader.runYarn(destinationDir)
                   .then(() => {
-                    return AppTester.runBowerInstall(destinationDir)
+                    return AppsLoader.runBowerInstall(destinationDir)
                   })
               })
               .catch((err) => {

@@ -4,25 +4,25 @@ const expect = require('chai').expect
 const fs = require('fs-promise')
 
 const {
-  AppTester,
+  AppsLoader,
   EmberServer,
 } = require('../index')
 
 describe('EmberServer', function () {
   this.timeout(60000) // It may encounter the worst case that nothing in the Bower and yarn cache.
 
-  let appTester
+  let appsLoader
   let emberServer
 
   before(() => {
-    appTester = new AppTester({
+    appsLoader = new AppsLoader({
       appsPath: path.join(__dirname, 'apps'),
     })
-    return appTester.loadApps()
+    return appsLoader.loadApps()
   })
 
   after(() => {
-    return appTester.clearCache()
+    return appsLoader.clearCache()
   })
 
   afterEach(() => {

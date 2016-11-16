@@ -2,7 +2,7 @@
 
 Utilities to test Ember apps.
 
-AppTester assumes that your fixture apps looks like below:
+AppsLoader assumes that your fixture apps looks like below:
 
 ```
 apps/
@@ -11,7 +11,7 @@ apps/
 ├─ app3
 ```
 
-AppTester will copy all the apps to the cache path (system temp directory by default), and run yarn and bower install for each of the app dir.
+AppsLoader will copy all the apps to the cache path (system temp directory by default), and run yarn and bower install for each of the app dir.
 
 ## Installation
 
@@ -22,9 +22,9 @@ AppTester will copy all the apps to the cache path (system temp directory by def
 In the build script, load the apps directory.
 
 ```
-const AppTester = require('ember-app-tester').AppTester
+const AppsLoader = require('ember-app-tester').AppsLoader
 
-new AppTester({
+new AppsLoader({
   appsPath: '/path/to/apps',
   cachePath: '/path/to/build/dir',
 }).loadApps()

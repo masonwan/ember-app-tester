@@ -1,7 +1,7 @@
-const AppTester = require('./src/app-tester')
+const AppsLoader = require('./src/apps-loader')
 const EmberServer = require('./src/ember-server')
 
 module.exports = {
-  AppTester,
+  AppsLoader,
   EmberServer,
 }
