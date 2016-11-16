@@ -3,11 +3,13 @@ const request = require('request-promise')
 const expect = require('chai').expect
 const fs = require('fs-promise')
 
-const AppTester = require('../src/app-tester')
-const EmberServer = require('../src/ember-server')
+const {
+  AppTester,
+  EmberServer,
+} = require('../index')
 
 describe('EmberServer', function () {
-  this.timeout(30000) // It may encounter the worst case that nothing in the Bower and yarn cache.
+  this.timeout(60000) // It may encounter the worst case that nothing in the Bower and yarn cache.
 
   let appTester
   let emberServer
