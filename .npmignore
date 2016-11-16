@@ -1,2 +1,4 @@
-test
-src
+/test
+/src
+index.js
+gulpfile.js
